@@ -75,17 +75,6 @@ Instale as dependências:
 npm install
 ```
 
-Crie um arquivo chamado `.env` na raiz do projeto. Use este modelo e preencha os valores reais:
-
-```env
-PORT=3000
-SECRET=uma_chave_secreta_forte
-SupaURL=https://seu-projeto.supabase.co
-SupaKEY=sua_chave_do_supabase
-```
-
-Nunca publique esse arquivo: ele contém informações privadas. O `.gitignore` já está configurado para ignorá-lo.
-
 ## Executando a API
 
 Inicie o servidor com:
