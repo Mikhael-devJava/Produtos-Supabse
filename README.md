@@ -11,12 +11,19 @@ API REST para consultar e cadastrar produtos em uma tabela do Supabase. O projet
 
 ## Tecnologias
 
+<p align="left">
+  <a href="https://nodejs.org/" title="Node.js"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js" height="40"></a>
+  <a href="https://expressjs.com/" title="Express"><img src="https://cdn.simpleicons.org/express/000000" alt="Express" height="40"></a>
+  <a href="https://supabase.com/" title="Supabase"><img src="https://cdn.simpleicons.org/supabase/3FCF8E" alt="Supabase" height="40"></a>
+  <a href="https://www.npmjs.com/package/dotenv" title="dotenv"><img src="https://cdn.simpleicons.org/dotenv/ECD53F" alt="dotenv" height="40"></a>
+  <a href="https://www.npmjs.com/package/jsonwebtoken" title="jsonwebtoken"><img src="https://cdn.simpleicons.org/jsonwebtokens/000000" alt="jsonwebtoken" height="40"></a>
+</p>
+
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [Supabase](https://supabase.com/)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-
 ## Requisitos
 
 - Node.js instalado.
