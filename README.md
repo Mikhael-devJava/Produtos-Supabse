@@ -1,103 +1,78 @@
-# Produtos-Supabse
+﻿# Produtos-Supabse
 
-Uma API simples, criada com Node.js, Express e Supabase, para consultar e cadastrar produtos. Cada produto possui, em geral, os campos `name` (nome) e `price` (preço).
+API REST para consultar e cadastrar produtos em uma tabela do Supabase. O projeto usa Node.js, Express e autenticação JWT na rota de cadastro.
 
-> **Aviso:** este é um projeto de estudos. Sou iniciante na área de desenvolvimento e o código foi criado para praticar conceitos de API REST, banco de dados, variáveis de ambiente e autenticação com token. Sugestões e melhorias são bem-vindas.
+## Funcionalidades
 
-## O que a API faz
+- Consulta os registros da tabela `produtos`.
+- Cadastra produtos com `name` e `price`.
+- Protege o cadastro com um token JWT válido por uma hora.
+- Lê as credenciais e configurações a partir de variáveis de ambiente.
 
-- Lista os produtos gravados na tabela `produtos` do Supabase.
-- Cadastra um produto novo na mesma tabela.
-- Exige um token JWT para o cadastro de produtos.
-- Mantém dados sensíveis, como chaves do Supabase e a chave do token, em um arquivo `.env` que não é enviado ao GitHub.
-
-## Tecnologias utilizadas
+## Tecnologias
 
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
-- [Supabase](https://supabase.com/) como banco de dados
-- [dotenv](https://www.npmjs.com/package/dotenv) para ler variáveis de ambiente
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) para criar e validar tokens JWT
+- [Supabase](https://supabase.com/)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 
-## Estrutura do projeto
-
-| Arquivo | Responsabilidade |
-| --- | --- |
-| `serve.js` | Inicia o servidor Express, ativa o JSON no corpo das requisições e registra a rota `/Produtos`. |
-| `Router.js` | Define as rotas `GET` e `POST` da API. |
-| `Controller.js` | Recebe a requisição HTTP, chama a camada de serviço e monta a resposta. |
-| `Sevice.js` | Faz as consultas e inserções na tabela `produtos` do Supabase. |
-| `Supa.js` | Cria e exporta a conexão com o Supabase usando as variáveis do `.env`. |
-| `Autenticacion.js` | Gera o token JWT e verifica o token enviado para cadastrar produtos. |
-| `.env` | Guarda configurações e segredos locais. Não deve ser publicado. |
-
-## Como o código funciona
-
-Quando o projeto é iniciado, o arquivo `serve.js` lê a porta configurada no `.env`, cria o servidor Express e libera o uso de JSON nas requisições com `express.json()`.
-
-As rotas ficam no caminho `/Produtos`:
-
-1. Uma requisição `GET /Produtos` vai para `ControllerGET`.
-2. O controller chama `ProductsGET`, em `Sevice.js`.
-3. O serviço consulta a tabela `produtos` no Supabase com `.select("*")`.
-4. Os produtos retornados pelo banco são enviados como resposta JSON.
-
-Para o cadastro:
-
-1. Uma requisição `POST /Produtos` passa primeiro pelo middleware `Autenticar`.
-2. O middleware procura o token no cabeçalho `Authorization` e valida esse token com a chave `SECRET`.
-3. Se o token for válido, `ControllerPOST` pega `name` e `price` do corpo da requisição.
-4. `ProductsPOST` envia esses dados para a tabela `produtos` com `.insert()`.
-5. A API responde com sucesso ou com uma mensagem de erro, conforme o resultado da operação.
-
-O token é gerado quando a aplicação inicia e aparece no terminal. Ele expira após uma hora.
-
-## Pré-requisitos
-
-Antes de executar, você precisa ter:
+## Requisitos
 
 - Node.js instalado.
-- Um projeto no Supabase.
-- Uma tabela chamada `produtos` configurada no banco. Ela deve ter campos compatíveis com `name` e `price`.
+- Um projeto Supabase e uma tabela chamada `produtos`.
+- As colunas `name` e `price` na tabela. Uma coluna `id` gerada pelo banco pode ser usada para identificar cada registro.
 
-## Instalação
+## Configuração
 
-Clone o repositório e entre na pasta do projeto:
+Clone o repositório e instale as dependências:
 
 ```bash
 git clone https://github.com/Mikhael-devJava/Produtos-Supabse.git
 cd Produtos-Supabse
-```
-
-Instale as dependências:
-
-```bash
 npm install
 ```
 
-## Executando a API
+Crie o arquivo `src/.env` com as configurações do seu ambiente:
 
-Inicie o servidor com:
-
-```bash
-node serve.js
+```env
+PORT=3000
+SupaURL=https://SEU-PROJETO.supabase.co
+SupaKEY=SUA_CHAVE_SUPABASE
+SECRET=UMA_CHAVE_SECRETA_PARA_JWT
 ```
 
-O terminal exibirá a URL da API e o token JWT gerado. Com o exemplo de porta acima, a URL será:
+Use uma chave apropriada para o seu projeto Supabase e mantenha `src/.env` e seus segredos fora do repositório. Não publique chaves privadas nem tokens.
+
+## Executar
+
+Na pasta raiz do projeto, inicie a API:
+
+```bash
+node src/serve.js
+```
+
+O terminal informa a URL local da API e imprime o token JWT criado na inicialização. Esse token expira em uma hora.
+
+A URL padrão, usando `PORT=3000`, é:
 
 ```text
-http://localhost:3000/Produtos/
+http://localhost:3000/Produtos
 ```
 
 ## Endpoints
 
 ### Listar produtos
 
-```http
-GET /Produtos
+`GET /Produtos`
+
+Não exige token. Exemplo com cURL:
+
+```bash
+curl http://localhost:3000/Produtos
 ```
 
-Exemplo de resposta:
+A resposta é uma lista JSON dos registros retornados pela tabela `produtos`, por exemplo:
 
 ```json
 [
@@ -109,34 +84,40 @@ Exemplo de resposta:
 ]
 ```
 
-### Cadastrar um produto
+### Cadastrar produto
 
-```http
-POST /Produtos
-Authorization: Bearer SEU_TOKEN
-Content-Type: application/json
+`POST /Produtos`
+
+Exige o token JWT mostrado no terminal ao iniciar a API. Envie-o no cabeçalho `Authorization` como `Bearer <token>` e forneça `name` e `price` no corpo JSON:
+
+```bash
+curl -X POST http://localhost:3000/Produtos \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Mouse","price":80}'
 ```
 
-Corpo da requisição:
+## Organização do código
 
-```json
-{
-  "name": "Mouse",
-  "price": 80
-}
-```
+| Arquivo | Responsabilidade |
+| --- | --- |
+| `src/serve.js` | Configura e inicia o servidor Express. |
+| `src/Router.js` | Registra as rotas da API. |
+| `src/Controller.js` | Trata as requisições e prepara as respostas. |
+| `src/Sevice.js` | Consulta e insere registros na tabela `produtos`. |
+| `src/Supa.js` | Cria o cliente do Supabase a partir das variáveis de ambiente. |
+| `src/Autenticacion.js` | Gera e valida tokens JWT. |
+| `src/.env` | Configuração local; não deve ser commitado. |
 
-Use o token exibido pelo terminal ao iniciar a API no lugar de `SEU_TOKEN`.
+## Escopo
 
-## Possíveis melhorias futuras
+Este projeto é de estudo e demonstra uma integração básica entre uma API Express e o Supabase. Atualmente, oferece consulta e cadastro; não inclui rotas para atualizar ou excluir produtos.
 
-- Criar rotas para atualizar e excluir produtos.
-- Validar os dados recebidos antes de salvar no banco.
-- Melhorar as mensagens de erro e os códigos de status.
-- Adicionar testes automatizados.
-- Criar documentação interativa com Swagger/OpenAPI.
-- Criar usuários e tokens individuais, em vez de gerar um token fixo ao iniciar a aplicação.
+## Autoria
 
-## Autor
+O código-fonte foi **100% escrito à mão pelo autor**. Os arquivos `README.md` foram produzidos com auxílio do Codex e do Claude Code.
 
-Mikhael — desenvolvedor iniciante, estudando e praticando desenvolvimento de APIs.
+## Licença
+
+Este repositório foi criado apenas para fins educacionais e de prática.
+
