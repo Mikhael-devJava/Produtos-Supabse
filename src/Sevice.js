@@ -1,6 +1,7 @@
 import {supabase} from "./Supa.js"
 export let Funcionando = true
 
+// Seleciona Todos os dados da Tabela produtos
 export async function ProductsGET() {
     try {
         const {data, error} = await supabase
@@ -20,7 +21,7 @@ export async function ProductsGET() {
     }
 }
 
-
+// Verifica se name é object, se não é null e se não é um Array e inseri os dados no Banco
 export async function ProductsPOST(name, price) {
     const dados = typeof name === "object" && name != null && !Array.isArray(name) ? 
     name : {name, price}
@@ -43,6 +44,7 @@ export async function ProductsPOST(name, price) {
     }
 }
 
+// Recebe os valores id, name e price, compara o id com o id do banco e atualiza o produto
 export async function ProductsPUT(id, name, price) {
     try {
         const {data, error} = await supabase

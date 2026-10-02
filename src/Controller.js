@@ -17,6 +17,7 @@ export async function ControllerPOST(req, res) {
     }
 }
 
+//Pegar os valores id, name e price e manda para ProductsPUT
 export async function ControllerPUT(req, res) {
     const {id, name, price} = req.body
     await Service.ProductsPUT(id, name, price)
