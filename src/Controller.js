@@ -16,3 +16,13 @@ export async function ControllerPOST(req, res) {
         res.status(404).send("Erro ao tentar enviar os dados ao Banco de dados")
     }
 }
+
+export async function ControllerPUT(req, res) {
+    const {id, name, price} = req.body
+    await Service.ProductsPUT(id, name, price)
+    if (await Service.Funcionando === true){
+        res.status(201).send("Produto atualizado com sucesso!")
+    }else{
+        res.status(404).json("Erro ao Atualizar os produtos")
+    }
+}

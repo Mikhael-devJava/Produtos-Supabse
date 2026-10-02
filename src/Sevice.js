@@ -42,3 +42,20 @@ export async function ProductsPOST(name, price) {
         Funcionando = false
     }
 }
+
+export async function ProductsPUT(id, name, price) {
+    try {
+        const {data, error} = await supabase
+        .from("produtos")
+        .update({"name": name, "price":price})
+        .eq("id",id)
+
+        if(error){
+            console.log("Erro na Parte de Comparar dados no PUT")
+            Funcionando = false
+        }
+        return data
+    }catch (error) {
+        
+    }
+}

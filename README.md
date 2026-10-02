@@ -1,12 +1,13 @@
 ﻿# Produtos-Supabse
 
-API REST para consultar e cadastrar produtos em uma tabela do Supabase. O projeto usa Node.js, Express e autenticação JWT na rota de cadastro.
+API REST para consultar, cadastrar e atualizar produtos em uma tabela do Supabase. O projeto usa Node.js, Express e autenticação JWT nas rotas de escrita.
 
 ## Funcionalidades
 
 - Consulta os registros da tabela `produtos`.
 - Cadastra produtos com `name` e `price`.
-- Protege o cadastro com um token JWT válido por uma hora.
+- Atualiza um produto existente pelo `id`.
+- Protege as operações de cadastro e atualização com um token JWT válido por uma hora.
 - Lê as credenciais e configurações a partir de variáveis de ambiente.
 
 ## Tecnologias
@@ -104,6 +105,20 @@ curl -X POST http://localhost:3000/Produtos \
   -d '{"name":"Mouse","price":80}'
 ```
 
+### Atualizar produto
+
+`PUT /Produtos`
+
+Exige o token JWT mostrado no terminal ao iniciar a API. Envie o identificador do produto e os valores de `name` e `price` no corpo JSON:
+
+```bash
+curl -X PUT http://localhost:3000/Produtos \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"id":1,"name":"Teclado mecânico","price":250}'
+```
+
+A API usa `id` para localizar o registro na tabela `produtos` e atualiza seus campos `name` e `price`.
 ## Organização do código
 
 | Arquivo | Responsabilidade |
@@ -111,14 +126,14 @@ curl -X POST http://localhost:3000/Produtos \
 | `src/serve.js` | Configura e inicia o servidor Express. |
 | `src/Router.js` | Registra as rotas da API. |
 | `src/Controller.js` | Trata as requisições e prepara as respostas. |
-| `src/Sevice.js` | Consulta e insere registros na tabela `produtos`. |
+| `src/Sevice.js` | Consulta, insere e atualiza registros na tabela `produtos`. |
 | `src/Supa.js` | Cria o cliente do Supabase a partir das variáveis de ambiente. |
 | `src/Autenticacion.js` | Gera e valida tokens JWT. |
 | `src/.env` | Configuração local; não deve ser commitado. |
 
 ## Escopo
 
-Este projeto é de estudo e demonstra uma integração básica entre uma API Express e o Supabase. Atualmente, oferece consulta e cadastro; não inclui rotas para atualizar ou excluir produtos.
+Este projeto é de estudo e demonstra uma integração básica entre uma API Express e o Supabase. Atualmente, oferece consulta, cadastro e atualização; ainda não inclui uma rota para excluir produtos.
 
 ## Autoria
 
@@ -127,4 +142,6 @@ O código-fonte foi **100% escrito à mão pelo autor**. Os arquivos `README.md`
 ## Licença
 
 Este repositório foi criado apenas para fins educacionais e de prática.
+
+
 
