@@ -1,13 +1,14 @@
 ﻿# Produtos-Supabse
 
-API REST para consultar, cadastrar e atualizar produtos em uma tabela do Supabase. O projeto usa Node.js, Express e autenticação JWT nas rotas de escrita.
+API REST para consultar, cadastrar, atualizar e excluir produtos em uma tabela do Supabase. O projeto usa Node.js, Express e autenticação JWT nas rotas de escrita.
 
 ## Funcionalidades
 
 - Consulta os registros da tabela `produtos`.
 - Cadastra produtos com `name` e `price`.
 - Atualiza um produto existente pelo `id`.
-- Protege as operações de cadastro e atualização com um token JWT válido por uma hora.
+- Exclui um produto existente pelo `id`.
+- Protege as operações de cadastro, atualização e exclusão com um token JWT válido por uma hora.
 - Lê as credenciais e configurações a partir de variáveis de ambiente.
 
 ## Tecnologias
@@ -119,6 +120,22 @@ curl -X PUT http://localhost:3000/Produtos \
 ```
 
 A API usa `id` para localizar o registro na tabela `produtos` e atualiza seus campos `name` e `price`.
+
+### Excluir produto
+
+`DELETE /Produtos`
+
+Exige o token JWT mostrado no terminal ao iniciar a API. Envie o `id` do produto no corpo JSON:
+
+```bash
+curl -X DELETE http://localhost:3000/Produtos \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"id":1}'
+```
+
+A API responde com `200` quando o produto é excluído, `400` quando o `id` não é informado e `404` quando não encontra um produto com esse `id`.
+
 ## Organização do código
 
 | Arquivo | Responsabilidade |
@@ -126,14 +143,14 @@ A API usa `id` para localizar o registro na tabela `produtos` e atualiza seus ca
 | `src/serve.js` | Configura e inicia o servidor Express. |
 | `src/Router.js` | Registra as rotas da API. |
 | `src/Controller.js` | Trata as requisições e prepara as respostas. |
-| `src/Sevice.js` | Consulta, insere e atualiza registros na tabela `produtos`. |
+| `src/Sevice.js` | Consulta, insere, atualiza e exclui registros na tabela `produtos`. |
 | `src/Supa.js` | Cria o cliente do Supabase a partir das variáveis de ambiente. |
 | `src/Autenticacion.js` | Gera e valida tokens JWT. |
 | `src/.env` | Configuração local; não deve ser commitado. |
 
 ## Escopo
 
-Este projeto é de estudo e demonstra uma integração básica entre uma API Express e o Supabase. Atualmente, oferece consulta, cadastro e atualização; ainda não inclui uma rota para excluir produtos.
+Este projeto é de estudo e demonstra uma integração básica entre uma API Express e o Supabase. Oferece rotas para consultar, cadastrar, atualizar e excluir produtos.
 
 ## Autoria
 
