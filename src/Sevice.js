@@ -63,6 +63,7 @@ export async function ProductsPUT(id, name, price) {
     }
 }
 
+//Recebe o valor id e deleta o produto
 export async function ProductsDELETE(id) {
     try {
         const {data, error} = await supabase
@@ -75,13 +76,11 @@ export async function ProductsDELETE(id) {
             console.log("Erro Na parte de Deletar dados")
             console.log(error)
             Funcionando = false
-            return null
         }
         Funcionando = true
         return data
     } catch (error) {
-        console.log("Erro no Servidor, na parte de DELETE", error)
+        console.log("Erro no Servidor, na parte de DELETE")
         Funcionando = false
-        return null
     }
 }
