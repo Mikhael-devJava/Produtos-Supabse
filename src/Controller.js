@@ -27,3 +27,20 @@ export async function ControllerPUT(req, res) {
         res.status(404).json("Erro ao Atualizar os produtos")
     }
 }
+
+export async function ControllerDELETE(req, res) {
+    const {id} = req.body
+    if (id === undefined || id === null || id === "") {
+        return res.status(400).json({ error: "Informe o id do produto no corpo da requisição" })
+    }
+
+    const deletedProducts = await Service.ProductsDELETE(id)
+    if (deletedProducts === null) {
+        return res.status(500).json({ error: "Erro ao deletar o produto" })
+    }
+    if (deletedProducts.length === 0) {
+        return res.status(404).json({ error: "Produto não encontrado" })
+    }
+
+    return res.status(200).json({ message: "Produto deletado com sucesso", id: deletedProducts[0].id })
+}

@@ -39,7 +39,7 @@ export async function ProductsPOST(name, price) {
         }
         return data
     } catch (error) {
-        console.log("Erro no Servidor, na parte POST do Model")
+        console.log("Erro no Servidor, na parte POST")
         Funcionando = false
     }
 }
@@ -58,6 +58,30 @@ export async function ProductsPUT(id, name, price) {
         }
         return data
     }catch (error) {
-        
+        console.logo("Erro no Servidor, na parte de PUT ")
+        Funcionando = false
+    }
+}
+
+export async function ProductsDELETE(id) {
+    try {
+        const {data, error} = await supabase
+        .from("produtos")
+        .delete()
+        .eq("id", id)
+        .select("id")
+
+        if(error){
+            console.log("Erro Na parte de Deletar dados")
+            console.log(error)
+            Funcionando = false
+            return null
+        }
+        Funcionando = true
+        return data
+    } catch (error) {
+        console.log("Erro no Servidor, na parte de DELETE", error)
+        Funcionando = false
+        return null
     }
 }
