@@ -21,6 +21,25 @@ export async function ProductsGET() {
     }
 }
 
+export async function ProductsFiltro(id) {
+    try {
+        const {data, error} = await supabase
+        .from("produtos")
+        .select("*")
+        .eq("id", id)
+
+        if(error){
+            console.log("Erro na Parte de Filtra o produto")
+            Funcionando = false
+        }
+        return data
+    } catch (error) {
+        console.log("Erro no Servidor na Parte de filtra o produto")
+        Funcionando = false
+    }
+}
+
+
 // Verifica se name é object, se não é null e se não é um Array e inseri os dados no Banco
 export async function ProductsPOST(name, price) {
     const dados = typeof name === "object" && name != null && !Array.isArray(name) ? 

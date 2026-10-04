@@ -6,6 +6,17 @@ export async function ControllerGET(req, res) {
     res.status(200).json(Produtos)
 }
 
+export async function ControllerFiltro(req, res) {
+    const id = req.params.id
+    const Resultado = await Service.ProductsFiltro(id)
+    if(await Service.Funcionando === true){
+        res.status(201).json(Resultado)
+    }else{
+        res.status(404).send("Produto não Encontrado")
+    }
+}
+
+
 //Pega os valores name e price no body e verifica se o sistema está funcionando corretamente
 export async function ControllerPOST(req, res) {
     const {name, price} = req.body
