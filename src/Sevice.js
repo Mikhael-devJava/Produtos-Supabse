@@ -21,6 +21,7 @@ export async function ProductsGET() {
     }
 }
 
+//Filtrando dados da tabela produto
 export async function ProductsFiltro(id) {
     try {
         const {data, error} = await supabase

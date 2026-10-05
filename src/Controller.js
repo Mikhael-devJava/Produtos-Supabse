@@ -6,6 +6,7 @@ export async function ControllerGET(req, res) {
     res.status(200).json(Produtos)
 }
 
+//Pega o id no Parametro da requisição e envia para ProductsFiltro
 export async function ControllerFiltro(req, res) {
     const id = req.params.id
     const Resultado = await Service.ProductsFiltro(id)
