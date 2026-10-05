@@ -32,11 +32,10 @@ export async function ProductsFiltro(id) {
         if(error){
             console.log("Erro na Parte de Filtra o produto")
             
-        }
+            }
         return data
     } catch (error) {
         console.log("Erro no Servidor na Parte de filtra o produto")
-        Funcionando = false
     }
 }
 
