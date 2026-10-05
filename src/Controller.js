@@ -10,11 +10,6 @@ export async function ControllerGET(req, res) {
 export async function ControllerFiltro(req, res) {
     const id = req.params.id
     const Resultado = await Service.ProductsFiltro(id)
-    if(await Service.Funcionando === true){
-        res.status(201).json(Resultado)
-    }else{
-        res.status(404).send("Produto não Encontrado")
-    }
 }
 
 
