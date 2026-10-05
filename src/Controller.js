@@ -9,7 +9,10 @@ export async function ControllerGET(req, res) {
 //Pega o id no Parametro da requisição e envia para ProductsFiltro
 export async function ControllerFiltro(req, res) {
     const id = req.params.id
-    const Resultado = await Service.ProductsFiltro(id)
+    if (id === null && id === ""){
+        res.status(404).json("Id Invalido")
+    }
+    await Service.ProductsFiltro(id)
 }
 
 
