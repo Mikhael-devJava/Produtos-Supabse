@@ -1,4 +1,4 @@
-import Router from "./Router.js"
+import * as Router from "./Router.js"
 import dotenv from "dotenv"
 import express from "express"
 import path from "path"
@@ -14,7 +14,8 @@ const app = express()
 app.use(express.json())
 
 //Cria as Rotas
-app.use("/Produtos", Router, Autenticar)
+app.use("/Produtos/:id",Router.Delete,Autenticar)
+app.use("/Produtos",Router.GetProdutos, Router.Post)
 
 //Exibe no Terminal o Token
 console.log(TOKEN)

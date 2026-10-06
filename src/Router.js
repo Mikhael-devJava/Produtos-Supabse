@@ -4,10 +4,8 @@ import express from "express"
 
 const Router = express()
 
-Router.get("/", ControllerGET)
-Router.get("/:id", ControllerFiltro)
-Router.post("/", Autenticar, ControllerPOST)
-Router.put("/",Autenticar, ControllerPUT)
-Router.delete("/",Autenticar, ControllerDELETE)
-
-export default Router
+export const GetProdutos = Router.get("/", ControllerGET)
+export const GetFiltragem = Router.get("/", ControllerFiltro)
+export const Post = Router.post("/", Autenticar, ControllerPOST)
+export const Put = Router.put("/",Autenticar, ControllerPUT)
+export const Delete =Router.delete("/",Autenticar, ControllerDELETE)

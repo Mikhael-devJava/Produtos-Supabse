@@ -26,7 +26,7 @@ export async function ProductsFiltro(id) {
     try {
         const {data, error} = await supabase
         .from("produtos")
-        .select("*")
+        .select()
         .eq("id", id)
 
         if(error){
@@ -93,7 +93,7 @@ export async function ProductsDELETE(id) {
 
         if(error){
             console.log("Erro Na parte de Deletar dados")
-            console.log(error)
+            console.log(id)
             Funcionando = false
         }
         Funcionando = true

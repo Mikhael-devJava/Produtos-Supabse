@@ -7,12 +7,13 @@ export async function ControllerGET(req, res) {
 }
 
 //Pega o id no Parametro da requisição e envia para ProductsFiltro
-export async function ControllerFiltro(req, res) {
-    const id = req.params.id
+export async function ControllerFiltro(req, res, next) {
+    const id = req.params.id;
     if (id === null && id === ""){
         res.status(404).json("Id Invalido")
-    }
-    await Service.ProductsFiltro(id)
+    }else{
+        await Service.ProductsFiltro(id)
+    }next()
 }
 
 
@@ -29,7 +30,8 @@ export async function ControllerPOST(req, res) {
 
 //Pegar os valores id, name e price e manda para ProductsPUT
 export async function ControllerPUT(req, res) {
-    const {id, name, price} = req.body
+    const id = req.params.id
+    const {name, price} = req.body
     await Service.ProductsPUT(id, name, price)
     if (await Service.Funcionando === true){
         res.status(201).send("Produto atualizado com sucesso!")
@@ -40,17 +42,14 @@ export async function ControllerPUT(req, res) {
 
 //Pega o Valor id e envia para ProductsDELETE
 export async function ControllerDELETE(req, res) {
-    const {id} = req.body
-    if (id === undefined || id === null || id === "") {
+    const id = req.params.id
+    if (id === undefined && id === null && id === "") {
         return res.status(400).json("Informe o id do produto no corpo da requisição" )
     }
 
     const deletedProducts = await Service.ProductsDELETE(id)
     if (Service.Funcionando === false) {
         return res.status(500).json("Erro ao deletar o produto")
+    }else{
+        return res.status(200).json("Produto deletado com sucesso")}
     }
-    if (deletedProducts.length === 0) {
-        return res.status(404).json("Produto não encontrado" )
-    }
-
-    return res.status(200).json("Produto deletado com sucesso")}
