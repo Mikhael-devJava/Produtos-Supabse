@@ -1,4 +1,4 @@
-import {supabase} from "./Repository.js"
+import {supabase} from "./Repository.jsory.js"
 export let Funcionando = true
 
 // Seleciona Todos os dados da Tabela produtos
