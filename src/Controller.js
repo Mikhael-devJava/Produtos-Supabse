@@ -16,7 +16,6 @@ export async function ControllerFiltro(req, res, next) {
     }next()
 }
 
-
 //Pega os valores name e price no body e verifica se o sistema está funcionando corretamente
 export async function ControllerPOST(req, res) {
     const {name, price} = req.body

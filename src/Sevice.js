@@ -1,4 +1,4 @@
-import {supabase} from "./Supa.js"
+import {supabase} from "./Repository.js"
 export let Funcionando = true
 
 // Seleciona Todos os dados da Tabela produtos
@@ -38,7 +38,6 @@ export async function ProductsFiltro(id) {
         console.log("Erro no Servidor na Parte de filtra o produto")
     }
 }
-
 
 // Verifica se name é object, se não é null e se não é um Array e inseri os dados no Banco
 export async function ProductsPOST(name, price) {
