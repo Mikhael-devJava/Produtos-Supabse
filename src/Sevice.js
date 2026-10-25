@@ -10,14 +10,12 @@ export async function ProductsGET() {
 
         if(error){
             console.log("Erro ao tentar verificar os dados do Banco de dados")
-            Funcionando = false
-        }else{
-            Funcionando = true
+            return false
         }
         return data
     } catch (error) {
         console.log("O Banco de dados não está disponivel no momento")
-        Funcionando = false
+        return false
     }
 }
 
@@ -31,11 +29,12 @@ export async function ProductsFiltro(id) {
 
         if(error){
             console.log("Id não Existe")
-            
+            return false
             }
         return data
     } catch (error) {
         console.log("Erro no Servidor na Parte de filtra o produto")
+        return false
     }
 }
 
@@ -50,15 +49,12 @@ export async function ProductsPOST(name, price) {
 
         if(error){
             console.log("Erro ao enviar os Dados ao Supabase")
-            console.log(error)
-            Funcionando = false
-        }else{
-            Funcionando = true
+            return false
         }
         return data
     } catch (error) {
         console.log("Erro no Servidor, na parte POST")
-        Funcionando = false
+        return false
     }
 }
 
@@ -72,12 +68,11 @@ export async function ProductsPUT(id, name, price) {
 
         if(error){
             console.log("Erro na Parte de Comparar dados no PUT")
-            Funcionando = false
         }
         return data
     }catch (error) {
         console.logo("Erro no Servidor, na parte de PUT ")
-        Funcionando = false
+        return false
     }
 }
 
@@ -92,13 +87,11 @@ export async function ProductsDELETE(id) {
 
         if(error){
             console.log("Erro Na parte de Deletar dados")
-            console.log(id)
-            Funcionando = false
+            return false
         }
-        Funcionando = true
         return data
     } catch (error) {
         console.log("Erro no Servidor, na parte de DELETE")
-        Funcionando = false
+        return false
     }
 }
