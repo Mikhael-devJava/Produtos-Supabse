@@ -11,7 +11,7 @@ dotenv.config({path:path.resolve(__dirname,".env")})
 const SECRETadm = process.env.SECRET
 
 //Gera um token ADM
-export const TOKEN = jsonwebtoken.sign({name: "Mikhael"}, SECRETadm,{expiresIn: "1h"})
+export const TOKEN = jsonwebtoken.sign({name: "Usuario"}, SECRETadm,{expiresIn: "1h"})
 
 //Verifica se o token existe e valida
 export async function Autenticar(req, res, next) {
