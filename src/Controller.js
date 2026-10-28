@@ -40,7 +40,7 @@ export async function ControllerPUT(req, res) {
     const {name, price} = req.body
      const Put = await Service.ProductsPUT(id, name, price)
 
-    if(await Put == false){
+    if(Put == false){
         return res.status(404).send("Requisição Falhou")
     }
 }
@@ -52,7 +52,7 @@ export async function ControllerDELETE(req, res) {
         return res.status(400).json("Informe o id do produto no corpo da requisição" )
     }
     const deletedProducts = await Service.ProductsDELETE(id)
-    if(await deletedProducts == false){
+    if(deletedProducts == false){
         return res.status(404).send("Requisição Falhou")
     }
 }
