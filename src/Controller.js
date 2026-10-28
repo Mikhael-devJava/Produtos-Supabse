@@ -29,7 +29,7 @@ export async function ControllerPOST(req, res) {
     const {name, price} = req.body
     const Post = await Service.ProductsPOST(name, price)
 
-    if(await Post == false){
+    if(Post == false){
         return res.status(404).send("Requisição Falhou")
     }
 }
