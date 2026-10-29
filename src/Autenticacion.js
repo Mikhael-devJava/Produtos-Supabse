@@ -16,6 +16,9 @@ export const TOKEN = jsonwebtoken.sign({name: "Usuario"}, SECRETadm,{expiresIn: 
 //Verifica se o token existe e valida
 export async function Autenticar(req, res, next) {
     const AuthHerads = req.headers["authorization"]
+    if(!AuthHerads){
+        return res.status(401).send("Cabeçalho não Informado")
+    }
     const token = AuthHerads && AuthHerads.split(" ")[1]
     if(!token){
         return res.status(401).send("Token não fornecido")

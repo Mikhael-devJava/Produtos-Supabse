@@ -1,5 +1,4 @@
 import {supabase} from "./Repository.js"
-export let Funcionando = true
 
 // Seleciona Todos os dados da Tabela produtos
 export async function ProductsGET() {
