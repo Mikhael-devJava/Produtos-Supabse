@@ -2,10 +2,12 @@ import { ControllerGET, ControllerPOST, ControllerPUT, ControllerDELETE, Control
 import {Autenticar} from "./Autenticacion.js"
 import express from "express"
 
-const Router = express()
+const Router = express.Router()
 
-export const GetProdutos = Router.get("/", ControllerGET)
-export const GetFiltragem = Router.get("/", ControllerFiltro)
-export const Post = Router.post("/", Autenticar, ControllerPOST)
-export const Put = Router.put("/",Autenticar, ControllerPUT)
-export const Delete = Router.delete("/",Autenticar, ControllerDELETE)
+Router.get("/", ControllerGET)
+Router.get("/:id", ControllerFiltro)
+Router.post("/:id", Autenticar, ControllerPOST)
+Router.put("/:id",Autenticar, ControllerPUT)
+Router.delete("/:id",Autenticar, ControllerDELETE)
+
+export default Router
