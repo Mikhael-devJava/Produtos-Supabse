@@ -13,8 +13,8 @@ export async function ControllerGET(req, res) {
 //Pega o id no Parametro da requisição e envia para ProductsFiltro
 export async function ControllerFiltro(req, res, next) {
     const id = req.params.id;
-    if (id === null && id === ""){
-        res.status(404).json("Id Invalido")
+    if (id === null && id === undefined && id === ""){
+        res.status(400).json("Informe o id no Corpo da URL")
     }else{
         const filtro = await Service.ProductsFiltro(id)
 
@@ -37,6 +37,9 @@ export async function ControllerPOST(req, res) {
 //Pegar os valores id, name e price e manda para ProductsPUT
 export async function ControllerPUT(req, res) {
     const id = req.params.id
+    if(id === undefined && id === null && id === ""){
+         return res.status(400).json("Informe o id do produto na URL" )
+    }
     const {name, price} = req.body
      const Put = await Service.ProductsPUT(id, name, price)
 
@@ -49,7 +52,7 @@ export async function ControllerPUT(req, res) {
 export async function ControllerDELETE(req, res) {
     const id = req.params.id
     if (id === undefined && id === null && id === "") {
-        return res.status(400).json("Informe o id do produto no corpo da requisição" )
+        return res.status(400).json("Informe o id do produto no corpo da URL")
     }
     const deletedProducts = await Service.ProductsDELETE(id)
     if(deletedProducts == false){
