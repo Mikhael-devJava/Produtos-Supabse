@@ -6,7 +6,7 @@ export async function ControllerGET(req, res, next) {
     if(Get == false){
         return res.status(404).send("Requisição Falhou")
     }else{
-        res.status(200).json(Produtos)
+        res.status(200).json(Get)
     }next()
 }
 
