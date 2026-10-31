@@ -47,7 +47,13 @@ export async function ControllerPUT(req, res, next) {
          return res.status(400).json("Informe o id do produto na URL" )
     }
     const {name, price} = req.body
-     const Put = await Service.ProductsPUT(id, name, price)
+    if (name === undefined && name === null && name === ""){
+        res.status(400).send("Informe o nome que deseja coloca no produto")
+        if(price === undefined && price === null && price === "" && typeof price !== "Number"){
+            res.status(400).send("Informe um preço que deseja colocar no produto")
+        }
+    }
+    const Put = await Service.ProductsPUT(id, name, price)
 
     if(Put == false){
         return res.status(404).send("Requisição Falhou")
